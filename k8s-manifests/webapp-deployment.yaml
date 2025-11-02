@@ -38,20 +38,26 @@ spec:
     spec:
       containers:
       - env:
-        - name: DBHOST
-          value: mysql
-        - name: DB_NAME
-          value: employees
-        - name: DB_PASSWORD
-          value: wpuserpass123
-        - name: DB_USER
-          value: wpuser
+         - name: DBHOST
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DBHOST
         - name: DBPORT
-          value: "3306"
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DBPORT
         - name: DBUSER
-          value: wpuser
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DBUSER
         - name: DBPWD
-          value: wpuserpass123
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DBPWD
         - name: DATABASE
           value: employees
         - name: DBNAME
@@ -60,7 +66,7 @@ spec:
         imagePullPolicy: IfNotPresent
         name: webapp
         ports:
-        - containerPort: 8080
+        - containerPort:0 8080
           protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log

@@ -40,12 +40,21 @@ spec:
       - env:
         - name: MYSQL_DATABASE
           value: employees
-        - name: MYSQL_PASSWORD
-          value: wpuserpass123
-        - name: MYSQL_ROOT_PASSWORD
-          value: rootpass123
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-credentials
+                key: DBPWD
         - name: MYSQL_USER
-          value: wpuser
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DBUSER
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-root-secret
+              key: MYSQL_ROOT_PASSWORD
         image: image-registry.openshift-image-registry.svc:5000/anjulakshmi-dev/mysqlinit@sha256:ab6722086dc4f301fec78f5c794243e7e5213febf15c6382de7fb32ba6fdc21b
         imagePullPolicy: IfNotPresent
         name: mysqlinit
