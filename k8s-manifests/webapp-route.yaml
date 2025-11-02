@@ -1,0 +1,37 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  creationTimestamp: "2025-11-02T10:06:56Z"
+  labels:
+    app: webapp
+    app.kubernetes.io/component: webapp
+    app.kubernetes.io/instance: webapp
+    app.kubernetes.io/name: webapp
+  name: webapp
+  namespace: anjulakshmi-dev
+  resourceVersion: "4213494011"
+  uid: cdd56c68-74a4-40b3-9402-b2efcfee7a65
+spec:
+  host: webapp-anjulakshmi-dev.apps.rm2.thpm.p1.openshiftapps.com
+  port:
+    targetPort: 8080
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: webapp
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: "2025-11-02T10:06:56Z"
+      status: "True"
+      type: Admitted
+    host: webapp-anjulakshmi-dev.apps.rm2.thpm.p1.openshiftapps.com
+    routerCanonicalHostname: router-default.apps.rm2.thpm.p1.openshiftapps.com
+    routerName: default
+    wildcardPolicy: None

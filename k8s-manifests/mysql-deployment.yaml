@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"mysqlinit:latest","namespace":"anjulakshmi-dev"},"fieldPath":"spec.template.spec.containers[?(@.name==\"mysqlinit\")].image"}]'
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2025-11-02T10:28:58Z"
+  generation: 2
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql
+    app.kubernetes.io/name: mysqlinit
+  name: mysql
+  namespace: anjulakshmi-dev
+  resourceVersion: "4212939032"
+  uid: fe3eb82b-1ffe-4f9b-9a98-565e7e40d3fb
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deployment: mysql
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deployment: mysql
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: employees
+        - name: MYSQL_PASSWORD
+          value: wpuserpass123
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpass123
+        - name: MYSQL_USER
+          value: wpuser
+        image: image-registry.openshift-image-registry.svc:5000/anjulakshmi-dev/mysqlinit@sha256:ab6722086dc4f301fec78f5c794243e7e5213febf15c6382de7fb32ba6fdc21b
+        imagePullPolicy: IfNotPresent
+        name: mysqlinit
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2025-11-02T10:29:01Z"
+    lastUpdateTime: "2025-11-02T10:29:01Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2025-11-02T10:28:58Z"
+    lastUpdateTime: "2025-11-02T10:29:01Z"
+    message: ReplicaSet "mysql-dd4d8db5" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
