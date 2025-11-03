@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: keepalive
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: keepalive
+            image: registry.access.redhat.com/ubi8/ubi-minimal
+            command: ["sh", "-c", "curl -s https://webapp-anjulakshmi-dev.apps.rm2.thpm.p1.openshiftapps.com/ > /dev/null"]
+          restartPolicy: OnFailure
+
