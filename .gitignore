@@ -44,3 +44,16 @@ node_modules
 
 # Ignore SASS config files
 .sass-cache
+
+
+
+
+
+
+# Sensitive or local files not to push
+db-secret.yaml
+redeploy.sh
+openshift-backup.yaml
+Creating
+Success
+
